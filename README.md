@@ -28,7 +28,6 @@ python3 -m http.server 8000
 Then open http://localhost:8000/ in a browser.
 
 ## Built with
-
 - HTML, CSS, and JavaScript
 - Math.js for parsing functions and calculating derivatives
 - Plotly.js for drawing the graphs
