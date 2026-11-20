@@ -10,8 +10,6 @@ Enter a function such as `sin(x) + x^2 / 4`, choose the range for `x`, and use t
 - Its derivative, which shows how quickly the function is changing
 - Its integral, which shows the accumulated area from the selected baseline
 
-The function graph appears first. The derivative and integral graphs are added only when their buttons are clicked, so the relationship is easy to follow.
-
 ## How to run it
 
 This project is made with plain HTML, CSS, and JavaScript. No build step is needed.
