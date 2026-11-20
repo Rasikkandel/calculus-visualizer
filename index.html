@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculus Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div class="eyebrow"><span class="pulse"></span> Interactive mathematics</div>
+        <h1>Calculus <em>Lab</em></h1>
+        <p>Explore a function, its rate of change, and accumulated area in one visual workspace.</p>
+      </header>
+
+      <section class="workspace">
+        <aside class="controls">
+          <div class="section-heading">
+            <span class="step">01</span>
+            <div><h2>Define a function</h2><p>Use x as your variable</p></div>
+          </div>
+          <form id="calculator-form">
+            <label for="function-input">f(x)</label>
+            <div class="input-wrap">
+              <span>f(x) =</span>
+              <input id="function-input" value="sin(x) + x^2 / 4" autocomplete="off" spellcheck="false" />
+            </div>
+            <div class="examples">
+              <button type="button" data-example="sin(x) + x^2 / 4">sin(x) + x² / 4</button>
+              <button type="button" data-example="x^3 - 3x">x³ − 3x</button>
+              <button type="button" data-example="exp(-x^2 / 4)">e⁻ˣ²⁄⁴</button>
+            </div>
+
+            <div class="section-heading range-heading">
+              <span class="step">02</span>
+              <div><h2>Set the view</h2><p>Choose your plotting window</p></div>
+            </div>
+            <div class="range-grid">
+              <label>From <input id="min-input" type="number" value="-10" step="1" /></label>
+              <label>To <input id="max-input" type="number" value="10" step="1" /></label>
+            </div>
+            <label for="baseline-input" class="baseline-label">Integral baseline <span>x₀</span></label>
+            <input id="baseline-input" type="number" value="0" step="0.5" />
+            <div class="plot-actions">
+              <button class="plot-button derivative-action" type="submit" data-operation="derivative"><span>Plot derivative</span><span class="arrow">↗</span></button>
+              <button class="plot-button integral-action" type="submit" data-operation="integral"><span>Plot integration</span><span class="arrow">↗</span></button>
+            </div>
+          </form>
+
+          <div id="error-message" class="error" role="alert"></div>
+          <div class="tips"><strong>Tip</strong><span>Try <code>cos(x) * exp(-x / 8)</code> or <code>abs(x - 2)</code>.</span></div>
+        </aside>
+
+        <section class="results">
+          <div class="result-topline">
+            <div>
+              <div class="section-heading">
+                <span class="step">03</span>
+                <div><h2>See the relationship</h2><p id="status-text">Enter a function to begin exploring</p></div>
+              </div>
+            </div>
+            <div class="view-switch" role="group" aria-label="Chart view">
+              <button class="view-button active" data-view="combined" type="button">Combined</button>
+              <button class="view-button" data-view="separate" type="button">Separate</button>
+            </div>
+          </div>
+
+          <div id="combined-chart" class="chart" hidden></div>
+          <div id="separate-charts" class="separate-charts" hidden>
+            <div id="function-chart" class="mini-chart"></div>
+            <div id="derivative-chart" class="mini-chart"></div>
+            <div id="integral-chart" class="mini-chart"></div>
+          </div>
+
+          <div class="legend" aria-label="Chart series">
+            <button class="legend-item active" data-series="function" type="button"><i class="swatch function"></i> f(x) <span id="function-expression">—</span></button>
+            <button class="legend-item active" data-series="derivative" type="button"><i class="swatch derivative"></i> f′(x) <span id="derivative-expression">—</span></button>
+            <button class="legend-item active" data-series="integral" type="button"><i class="swatch integral"></i> ∫f(x) dx <span>from x₀</span></button>
+          </div>
+        </section>
+      </section>
+      <footer><span>CALCULUS LAB / 01</span><span>Derivatives are symbolic · Integrals are numerical accumulations</span></footer>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
