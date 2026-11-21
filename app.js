@@ -1,5 +1,10 @@
 const colors = { function: "#4774d5", derivative: "#e48b48", integral: "#9162c5" };
-const state = { traces: [], view: "combined", visible: { function: true, derivative: false, integral: false } };
+const state = {
+  traces: [],
+  view: "combined",
+  visible: { function: true, derivative: false, integral: false },
+  plotted: { function: true, derivative: false, integral: false }
+};
 
 const $ = (id) => document.getElementById(id);
 const formatExpression = (node) => math.simplify(node).toString({ parenthesis: "keep" });
@@ -64,12 +69,15 @@ function calculate(event, operation) {
     ];
     if (operation === "function") {
       state.visible = { function: true, derivative: false, integral: false };
+      state.plotted = { function: true, derivative: false, integral: false };
     } else if (operation === "derivative") {
       state.visible.function = true;
       state.visible.derivative = true;
+      state.plotted.derivative = true;
     } else if (operation === "integral") {
       state.visible.function = true;
       state.visible.integral = true;
+      state.plotted.integral = true;
     }
     $("function-expression").textContent = source;
     $("derivative-expression").textContent = `= ${formatExpression(derivative)}`;
@@ -79,7 +87,11 @@ function calculate(event, operation) {
       state.visible.integral && "accumulated area"
     ].filter(Boolean).join(", ").replace(", accumulated area", " and accumulated area").replace(", its derivative", " and its derivative");
     $("status-text").textContent = `Showing ${operationLabel} from x₀ = ${xs[baselineIndex].toFixed(2)}`;
-    document.querySelectorAll(".legend-item").forEach((button) => button.classList.toggle("active", state.visible[button.dataset.series]));
+    document.querySelectorAll(".legend-item").forEach((button) => {
+      const series = button.dataset.series;
+      button.hidden = !state.plotted[series];
+      button.classList.toggle("active", state.visible[series]);
+    });
     renderAll();
   } catch (problem) {
     error.textContent = problem.message || "Could not understand that function.";
